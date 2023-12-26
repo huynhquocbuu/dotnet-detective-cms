@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Detective Dashboard">
+    <meta name="author" content="BuuHQ">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
+
+    <title>@ViewData["Title"]</title>
+
+    <!-- vendor css -->
+    <link href="~/lib/dashforge/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="~/lib/dashforge/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/lib/dashforge/cryptofont/css/cryptofont.min.css" rel="stylesheet">
+    <link href="~/lib/dashforge/jqvmap/jqvmap.min.css" rel="stylesheet">
+
+    <!-- Data table -->
+        <link rel="stylesheet" type="text/css" href="~/lib/dashforge/datatables.net-dt/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="~/lib/dashforge/datatables.net-responsive-dt/css/responsive.dataTables.min.css"/>
+        
+        <link href="~/lib/dashforge/select2/css/select2.min.css" rel="stylesheet"> 
+    
+    <!-- DashForge CSS -->
+    <link rel="stylesheet" href="~/assets/css/dashforge.css">
+    <link rel="stylesheet" href="~/assets/css/dashforge.dashboard.css">
+    
+    <link rel="stylesheet" href="~/lib/dashforge/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    
+    
+    <!-- Kendo-UI CSS -->
+    <link rel="stylesheet" href="~/lib/kendo-ui/styles/bootstrap-main.css">
+    
+    @await RenderSectionAsync("Styles", required: false)
+  </head>
+  <body>
+    <partial name="Partials/Admin/_LeftSideBar" />
+  
+    <div class="content ht-100v pd-0">
+        <div class="content-header">
+          <div class="content-search">
+            <i data-feather="search"></i>
+            <input type="search" class="form-control" placeholder="Search...">
+          </div>
+          <nav class="nav">
+            
+          
+          
+            <a href="" class="nav-link"><i data-feather="help-circle"></i></a>
+            
+  
+            <div class="dropdown dropdown-notification ml-2">
+                <a href="" class="dropdown-link new-indicator" data-toggle="dropdown">
+                  <i data-feather="bell"></i>
+                  <span id="notify-bell-number">0</span>
+                </a>
+                <div id="notify-bell-content" class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-header">Notifications</div>
+                      
+                </div>
+            </div>
+  
+            
+            
+          </nav>
+        </div><!-- content-header -->
+  
+        <div class="content-body">
+          <div class="container-fluid pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            
+  
+            @RenderBody()
+  
+            <footer class="footer">
+              <div>
+                  <span>&copy; 2023 Detective Portal v1.0 </span>
+                  <span>Created by: Some One</span>
+              </div>
+              <div>
+                  <nav class="nav">
+                      <a href="#" class="nav-link">Licenses</a>
+                      <a href="#" class="nav-link">Change Log</a>
+                      <a href="#" class="nav-link">Get Help</a>
+                  </nav>
+              </div>
+            </footer>
+          </div><!-- container -->
+        </div>
+  
+        
+  
+      </div><!-- content -->
+  
+ 
+  
+  <script src="~/lib/dashforge/jquery/jquery.min.js"></script>
+  <script src="~/lib/dashforge/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/dashforge/feather-icons/feather.min.js"></script>
+  <script src="~/lib/dashforge/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  
+    <script src="~/lib/dashforge/jquery.flot/jquery.flot.js"></script>
+    <script src="~/lib/dashforge/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="~/lib/dashforge/jquery.flot/jquery.flot.resize.js"></script>
+    <script src="~/lib/dashforge/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/lib/dashforge/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/lib/dashforge/jqvmap/maps/jquery.vmap.usa.js"></script>
+
+    <script src="~/assets/js/dashforge.js"></script>
+    <script src="~/assets/js/dashforge.aside.js"></script>
+    @* <script src="/assets/js/dashforge.sampledata.js"></script> *@
+
+    <!-- Data tables -->
+    <script src="~/lib/dashforge/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/dashforge/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
+    <script src="~/lib/dashforge/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/dashforge/datatables.net-responsive-dt/js/responsive.dataTables.min.js"></script>
+    <script src="~/lib/dashforge/select2/js/select2.min.js"></script>   
+    
+    <script src="~/lib/dashforge/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>   
+  
+  
+  <!-- append theme customizer -->
+    <script src="~/lib/dashforge/js-cookie/js.cookie.js"></script>
+    @* <script src="/assets/js/dashforge.settings.js"></script> *@
+  
+   <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+  
+  <script src="~/js/telerik-editor.js"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $('.select2').select2();
+  });
+  </script>
+  
+  @await RenderSectionAsync("Scripts", required: false)
+  </body>
+</html>

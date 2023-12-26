@@ -1,0 +1,23 @@
+@{
+    var aboutUsInfo = ViewData["AboutUs"] as HomeInfoDto;
+}
+<div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+        @* <h2>CHÚNG TÔI LÀ AI?</h2> *@
+        <h2>@Html.Raw(aboutUsInfo.Title)</h2>
+        
+    </div>
+
+    <div class="row content">
+        @Html.Raw(aboutUsInfo.Content)
+        
+        <br>
+        <div class="col-md-2 col-sm-3">
+            @* <a href="/Home/AboutUs" class="btn-learn-more">Chi tiết</a> *@
+            <a href="/Post/Detail/@aboutUsInfo.DetailSlug" class="btn-learn-more fw-bold">Chi tiết</a>
+        </div>
+
+    </div>
+
+</div>

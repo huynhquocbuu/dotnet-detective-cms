@@ -1,0 +1,54 @@
+@model List<Cms.Application.Admin.Models.User.UserDto>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h4 class="row">Quản lý User</h4>
+<div class="row">
+    
+    <table id="admin-users" class="table" style="width:100%">
+        <thead>
+        <tr>
+            <th><a href="/Admin/User/Add" class="text-primary"><i data-feather="plus-circle"></i> Thêm mới</a></th>
+            <th class="pr-4">Username</th>
+            <th class="pr-4">Fullname</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="text-primary" href="/Admin/User/Edit/@item.Id"><i data-feather="edit"></i> Chỉnh sửa</a>
+                    <a class="text-primary" href="/Admin/User/ResetPassword/@item.Id"><i data-feather="refresh-cw"></i> Đặt lại mật khẩu</a>
+                    <a class="text-danger" href="/Admin/User/Delete/@item.Id"> <i data-feather="delete"></i> Xoá</a>
+                </td>
+                <td>@item.Username</td>
+                <td>@item.FullName</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#admin-users').DataTable({
+                responsive: true,
+                    iDisplayLength: 25,
+                    language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                },
+                              
+            });
+        });
+    </script>
+}

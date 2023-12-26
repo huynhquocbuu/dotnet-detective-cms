@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cms.Application\Cms.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\Auth\Denied.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Auth\Login.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Post\Add.cshtml" />
+      <AdditionalFiles Include="Views\Shared\Partials\Admin\_LeftSideBar.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\assets\arsha\" />
+      <Folder Include="wwwroot\contents\blog\" />
+    </ItemGroup>
+
+</Project>

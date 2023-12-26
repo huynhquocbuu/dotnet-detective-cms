@@ -1,0 +1,39 @@
+@model List<Cms.Infrastructure.Persistence.Entities.Setting>
+@{
+    Layout = "_AdminLayout";
+    
+}
+
+<div class="container">
+    <h4>Quản lý cấu hình</h4>
+    <div class="row">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col"><a href="/Admin/Setting/Add" class="text-primary"><i data-feather="plus-circle"></i></a></th>
+                    <th scope="col">Cấu hình</th>
+                    <th scope="col">Gía trị</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a class="text-primary" href="/Admin/Setting/Edit/@item.Id"><i data-feather="edit"></i></a> <a class="text-danger" href="/Admin/Setting/Delete/@item.Id"> <i data-feather="delete"></i></a></td>
+                        <td>@item.Key</td>
+                        <td>@item.Value.Substring(0, Math.Min(@item.Value.Length, 100)) ...</td>
+                    </tr>
+                }
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+    <!-- /.row-->
+</div>

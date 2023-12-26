@@ -1,0 +1,8 @@
+@model Cms.Application.Admin.Models.Post.PostDetailDto
+@{
+    Layout = "_PostDetailLayout";
+}
+
+<div class="row">
+    @Html.Raw(Model.Content)
+</div>

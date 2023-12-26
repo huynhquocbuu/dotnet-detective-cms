@@ -1,0 +1,25 @@
+@{
+  var services = ViewData["Services"] as List<HomeInfoDto>;
+}
+<div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>CÁC DỊCH VỤ THÁM TỬ</h2>
+          <p>Hiện tại chúng tôi các các văn phòng đại diện tại Bắc, Trung, Nam để cung cấp các dịch vụ thám tử trên phạm vi toàn quốc</p>
+        </div>
+
+        <div class="row">
+          
+          @foreach (var item in services)
+          {
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-4" data-aos="zoom-in" data-aos-delay="400">
+              <div class="icon-box">
+                <div class="icon"><i class="bx bx-trip"></i></div>
+                <h4><a href="/Post/Detail/@item.DetailSlug">@item.Title</a></h4>
+                @Html.Raw(item.Content)
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>

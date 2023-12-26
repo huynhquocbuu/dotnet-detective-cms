@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/assets/css/dashforge.css" />
+    <link rel="stylesheet" href="~/assets/css/dashforge.auth.css" />
+</head>
+<body>
+
+
+<div class="content content-fixed content-auth-alt">
+    <div class="container d-flex justify-content-center ht-100p">
+        <div class="mx-wd-300 wd-sm-450 ht-100p d-flex flex-column align-items-center justify-content-center">
+            @* <img class="w-100" src="/assets/img/hdf-logo.png" alt="Alternate Text" /> *@
+                
+            <h2 class="text-danger font-weight-bold mg-t-6">DETECTIVE SYSTEM</h2>
+
+            @RenderBody()
+        </div>
+    </div><!-- container -->
+</div><!-- content -->
+
+<footer class="footer">
+    <div>
+        <span>&copy; 2023 Tham tu tu v1.0.0. </span>
+        <span>Created by: Kitaro</span>
+    </div>
+    <div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Licenses</a>
+            <a href="#" class="nav-link">Change Log</a>
+            <a href="#" class="nav-link">Get Help</a>
+        </nav>
+    </div>
+</footer>
+
+
+
+
+<script src="~/lib/dashforge/jquery/jquery.min.js"></script>
+<script src="~/lib/dashforge/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/lib/dashforge/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/lib/dashforge/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/lib/dashforge/feather-icons/feather.min.js"></script>
+<script src="~/assets/js/dashforge.js"></script>
+
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

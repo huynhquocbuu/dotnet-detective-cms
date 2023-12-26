@@ -1,0 +1,35 @@
+@model Cms.Infrastructure.Persistence.Entities.FAQ
+@{
+    Layout = "_AdminLayout";
+    
+}
+
+<div class="container">
+    <h4>Chỉnh sửa Câu hỏi thường gặp</h4>
+    <form method="post">
+        <input type="hidden" asp-for="Id">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="tx-bold"  asp-for="Question">Câu hỏi:</label>
+                <input asp-for="Question" class="form-control">
+            </div>
+            
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-8">
+                <label class="tx-bold" asp-for="Answer">Trả lời: </label>
+                <textarea rows="4" asp-for="Answer" class="form-control"></textarea>
+            </div>
+            
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <input type="submit" value="Submit" class="form-control btn btn-primary">
+            </div>
+                    
+        </div>
+        
+
+    </form>
+    <!-- /.row-->
+</div>
