@@ -117,4 +117,36 @@ public class PostService : IPostUseCase
         };
         
     }
+
+    public async Task<PostDto> GetEditPostDto(long id)
+    {
+        var postEntity = await _postRepository.FindByCondition(x => x.Id.Equals(id))
+            .Include(incl1 => incl1.Categories)
+            .Include(incl2 => incl2.Tags)
+            .FirstOrDefaultAsync();
+        //postEntity.Categories
+
+        var categories = await _categoryRepository.GetCategoriesAsync();
+        var tags = await _tagRepository.GetTagsAsync();
+        return new PostDto()
+        {
+            Categories = categories.Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Title = x.Title
+            }).ToList(),
+            SelectedCategories = postEntity.Categories
+                .Select(s => s.Id).ToList(),
+            Tags = tags.Select(t => new TagDto()
+            {
+                Title = t.Title,
+                Id = t.Id
+            }).ToList(),
+            SelectedTags = postEntity.Tags
+                .Select(s => s.Id).ToList(),
+            Content = postEntity.Content,
+            Summary = postEntity.Summary,
+
+        };
+    }
 }

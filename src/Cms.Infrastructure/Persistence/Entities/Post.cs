@@ -33,4 +33,7 @@ public class Post : EntityAuditBase<long>
     
     public ICollection<Comment> Comments { get; set; }
     public ICollection<Meta> Metas { get; set;  }
+
+
+    public bool IsVisible { get; set; }
 }

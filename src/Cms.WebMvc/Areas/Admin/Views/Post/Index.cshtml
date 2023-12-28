@@ -14,7 +14,7 @@
             <th class="pr-4">Slug</th>
             <th class="pr-4">Title</th>
             <th class="pr-4">Summary</th>
-                    
+            <th class="pr-4">Content</th>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                 <td>@item.Slug</td>
                 <td>@item.Title.Substring(0, Math.Min(@item.Title.Length, 100))</td>
                 <td>@item.Summary.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
-                                        
+                <td>@item.Content.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
             </tr>
         }
 

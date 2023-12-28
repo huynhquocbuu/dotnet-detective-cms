@@ -10,7 +10,7 @@ public class Category : EntityBase<long>
     [MaxLength(200)]
     public string Title { get; set; }
     public string Content { get; set; }
-    
+    public bool IsVisible { get; set; }
     //public List<Post> Posts { get; } = new();
     public ICollection<Post> Posts { get; set; }
 }

@@ -1,0 +1,120 @@
+﻿@using Microsoft.IdentityModel.Tokens
+@model Cms.Application.Admin.Models.Post.PostDto
+@{
+    ViewData["Title"] = "Post Edit Page";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <h4 class="tx-bold">Chỉnh sửa bài viết</h4>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="tx-bold"  asp-for="Title"></label>
+                <input asp-for="Title" class="form-control">
+            </div>
+            <div class="form-group col-md-4">
+                <label class="tx-bold" asp-for="Slug"></label>
+                <input asp-for="Slug" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="PostImg" class="tx-bold"></label>
+                <input type="file" class="form-control-file" asp-for="PostImg" onchange="previewImageUpload(this)">
+            </div>
+            <div class="form-group col-md-4">
+                <img id="preview-img" src="~/assets/img/no-image-icon.png" alt="previewImage" style="max-width:100%" />
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label class="tx-bold" for="Categories">Category</label>
+                <select asp-for="SelectedCategories" class="form-control select2" multiple="multiple">
+                    <option label="Choose one"></option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (Model.SelectedCategories.Contains(category.Id))
+                        {
+                            <option value="@category.Id" selected>@category.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@category.Id">@category.Title</option>
+                        }
+                        
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="tx-bold"  for="Tags">Tags</label>
+                <select asp-for="SelectedTags" class="form-control select2" multiple="multiple">
+                    <option label="Choose one"></option>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        if (Model.SelectedTags.Contains(tag.Id))
+                        {
+                            <option value="@tag.Id" selected>@tag.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@tag.Id">@tag.Title</option>
+                        }
+                        
+                    }
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <label class="tx-bold" asp-for="Summary"></label>
+                <textarea rows="4" asp-for="Summary" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <label class="tx-bold" asp-for="Content"></label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <input type="submit" value="Submit" class="form-control btn btn-primary">
+            </div>
+            
+        </div>
+
+
+    </form>
+
+    
+    <!-- /.row-->
+</div>
+
+@section Scripts {
+
+    <script>
+    function previewImageUpload(input) {
+        if (input.files && input.files[0]) {
+
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            document.querySelector("#preview-img").setAttribute("src",e.target.result);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+    }
+// ------------------------------Document Ready---------------
+$(document).ready(function () {
+    editorLoader($("#Content"));
+    // editorLoader($("#Summary"));
+});
+// ------------------------------Document Ready---------------
+</script>
+}

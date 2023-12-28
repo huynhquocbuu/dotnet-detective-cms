@@ -226,13 +226,15 @@ public class CmsDbContextSeed
                 {
                     Title = "Tin Thám tử",
                     Content = "Các thông tin trong lĩnh vực Thám tử",
-                    Slug = "tham-tu"
+                    Slug = "tham-tu",
+                    IsVisible = true
                 },
                 new()
                 {
                     Title = "default",
                     Content = "default",
-                    Slug = "default"
+                    Slug = "default",
+                    IsVisible = true
                 }
             };
             await _context.Categories.AddRangeAsync(categories);
@@ -331,7 +333,8 @@ public class CmsDbContextSeed
 ",
                 Categories = _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                 Tags = _context.Tags.Where(x => x.Slug.Equals("about-us")).ToList(),
-                Order = 1
+                Order = 1,
+            
             };
             
             var servicePosts = new List<Post>()
@@ -370,7 +373,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 2
+                    Order = 2,
+                    
                 },
                 //---------------------------
                 new()
@@ -388,7 +392,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 3
+                    Order = 3,
+                    
                 },
                 //---------------------------
                 new()
@@ -406,7 +411,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 4
+                    Order = 4,
+                    
                 },
                 //---------------------------
                 new()
@@ -424,7 +430,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 5
+                    Order = 5,
+                   
                 },
                 //---------------------------
                 new()
@@ -442,7 +449,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 6
+                    Order = 6,
+                    
                 },
                 //---------------------------
                 new()
@@ -460,7 +468,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 7
+                    Order = 7,
+                    
                 },
                 //---------------------------
                 new()
@@ -478,7 +487,8 @@ public class CmsDbContextSeed
 ",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 8
+                    Order = 8,
+                    
                 },
             };
 
@@ -495,7 +505,8 @@ public class CmsDbContextSeed
                     Content = @"Explicabo voluptatem mollitia et repellat qui dolorum quasi",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
-                    Order = 1
+                    Order = 1,
+                    IsVisible = true,
                 },
                 //---------------------------
                 new ()
@@ -509,7 +520,8 @@ public class CmsDbContextSeed
                     Content = @"Aut maiores voluptates amet et quis praesentium qui senda para",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
-                    Order = 2
+                    Order = 2,
+                    IsVisible = true,
                 },
                 //----------------------
                 new ()
@@ -523,7 +535,8 @@ public class CmsDbContextSeed
                     Content = @"Quisquam facilis cum velit laborum corrupti fuga rerum quia",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
-                    Order = 3
+                    Order = 3,
+                    IsVisible = true,
                 },
                 //----------------------
                 new ()
@@ -537,7 +550,8 @@ public class CmsDbContextSeed
                     Content = @"Dolorum tempora officiis odit laborum officiis et et accusamus",
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
-                    Order = 4
+                    Order = 4,
+                    IsVisible = true,
                 },
             };
 

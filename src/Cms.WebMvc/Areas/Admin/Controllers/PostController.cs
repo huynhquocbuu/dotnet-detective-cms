@@ -42,4 +42,13 @@ public class PostController : Controller
         
         return Redirect($"/Admin/Dashboard");
     }
+
+    public async Task<IActionResult> Edit(long id)
+    {
+        //ViewData["Breadcrumb"] = "Post/Editor";
+
+
+        PostDto model = await _useCase.GetEditPostDto(id);
+        return View(model);
+    }
 }
