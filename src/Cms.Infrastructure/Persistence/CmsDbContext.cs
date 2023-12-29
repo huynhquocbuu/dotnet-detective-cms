@@ -11,7 +11,7 @@ public class CmsDbContext : IdentityDbContext<User, Role, Guid>
     {
     }
     
-    public DbSet<Product> Products { get; set; }
+    //public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
@@ -19,7 +19,8 @@ public class CmsDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Meta> Metas { get; set; }
     public DbSet<Setting> Settings { get; set; }
     public DbSet<FAQ> FAQs { get; set; }
-    
+    public DbSet<SiteContent> SiteContents { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

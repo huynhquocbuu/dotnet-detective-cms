@@ -65,7 +65,8 @@ namespace Cms.Infrastructure.Persistence.Migrations
                     Slug = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ParentId = table.Column<long>(type: "bigint", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsVisible = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,6 +76,21 @@ namespace Cms.Infrastructure.Persistence.Migrations
                         column: x => x.ParentId,
                         principalTable: "Categories",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FAQs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FAQs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +116,7 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -115,7 +131,7 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,6 +146,27 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SiteContents",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContentType = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Summary = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    Content = table.Column<string>(type: "ntext", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    LastModifiedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteContents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,8 +470,8 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 column: "TagsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_No",
-                table: "Products",
+                name: "IX_Product_No",
+                table: "Product",
                 column: "No",
                 unique: true);
         }
@@ -464,16 +501,22 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "FAQs");
+
+            migrationBuilder.DropTable(
                 name: "Metas");
 
             migrationBuilder.DropTable(
                 name: "PostTag");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "SiteContents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

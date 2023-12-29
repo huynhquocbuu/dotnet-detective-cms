@@ -12,20 +12,20 @@ public class PostRepository : RepositoryBase<Post, long, CmsDbContext>, IPostRep
     {
     }
    
-    public async Task<IEnumerable<Post>> GetProductsAsync() => await FindAll().ToListAsync();
+    //public async Task<IEnumerable<Post>> GetAllAsync() => await FindAll().ToListAsync();
 
-    public Task<Post> GetProductAsync(long id) => GetByIdAsync(id);
+    //public Task<Post> GetByIdAsync(long id) => GetByIdAsync(id);
 
-    public Task<Post> GetProductByTitleAsync(string title) =>
+    public Task<Post> GetByTitleAsync(string title) =>
         FindByCondition(x => x.Title.Equals(title)).SingleOrDefaultAsync();
 
-    public Task CreateProductAsync(Post post) => CreateAsync(post);
+    //public Task CreateAsync(Post post) => CreateAsync(post);
 
-    public Task UpdateProductAsync(Post post) => UpdateAsync(post);
+    //public Task UpdateAsync(Post post) => UpdateAsync(post);
 
-    public async Task DeleteProductAsync(long id)
+    public async Task DeleteByIdAsync(long id)
     {
-        var product = await GetProductAsync(id);
+        var product = await GetByIdAsync(id);
         if (product != null) await DeleteAsync(product);
     }
 }

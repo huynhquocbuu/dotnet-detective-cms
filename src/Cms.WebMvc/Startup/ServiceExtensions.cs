@@ -61,6 +61,7 @@ public static class ServiceExtensions
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<ISettingRepository, SettingRepository>();
         services.AddScoped<IFAQRepository, FAQRepository>();
+        services.AddScoped<ISiteContentRepository, SiteContentRepository>();
 
         services.AddAutoMapper(cfg => cfg.AddProfile(new ProductMappingProfile()));
 
@@ -74,7 +75,8 @@ public static class ServiceExtensions
         services.AddScoped<IFAQUseCase, FAQService>();
         services.AddScoped<ISettingUseCase, SettingService>();
         services.AddScoped<IUserUseCase, UserService>();
-        
+        services.AddScoped<ISiteContentUseCase, SiteContentService>();
+
         return services;
     }
 }

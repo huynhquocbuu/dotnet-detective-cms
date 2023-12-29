@@ -3,12 +3,12 @@ using Configuration.Persistence.Interfaces;
 
 namespace Cms.Infrastructure.Persistence.Interfaces;
 
-public interface IPostRepository: IRepositoryBase<Post, long, CmsDbContext>
+public interface IPostRepository : IRepositoryBase<Post, long, CmsDbContext>
 {
-    Task<IEnumerable<Post>> GetProductsAsync();
-    Task<Post> GetProductAsync(long id);
-    Task<Post> GetProductByTitleAsync(string title);
-    Task CreateProductAsync(Post post);
-    Task UpdateProductAsync(Post post);
-    Task DeleteProductAsync(long id);
+    //Task<IEnumerable<Post>> GetAllAsync();
+    //Task<Post> GetByIdAsync(long id);
+    Task<Post> GetByTitleAsync(string title);
+    //Task CreateAsync(Post post);
+    //Task UpdateAsync(Post post);
+    Task DeleteByIdAsync(long id);
 }

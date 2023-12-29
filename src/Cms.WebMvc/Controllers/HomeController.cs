@@ -29,6 +29,8 @@ public class HomeController : Controller
         return View(model);
     }
     
+    
+    
     public IActionResult AboutUs()
     {
         return View();

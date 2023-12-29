@@ -51,4 +51,15 @@ public class PostController : Controller
         PostDto model = await _useCase.GetEditPostDto(id);
         return View(model);
     }
+
+    [HttpPost]
+    [AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> Edit(PostDto model)
+    {
+        //ViewData["Breadcrumb"] = "Post/Editor";
+
+
+       var eff = await _useCase.DoEdit(model);
+        return Redirect("/Admin/Post");
+    }
 }

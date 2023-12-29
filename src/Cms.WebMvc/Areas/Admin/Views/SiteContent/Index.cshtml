@@ -1,0 +1,57 @@
+@model List<SiteContent>
+@{
+    Layout = "_AdminLayout";
+    
+}
+
+<h4 class="row">Quản lý thông tin Website</h4>
+<div class="row">
+    
+    <table id="admin-posts" class="table" style="width:100%">
+        <thead>
+        <tr>
+            @* <th class="pr-4"><a href="/Admin/SiteContent/Add" class="text-primary"><i data-feather="plus-circle"> </i> </a></th> *@
+            <th class="pr-4">##</th>
+            <th class="pr-4">Slug</th>
+            <th class="pr-4">Title</th>
+            <th class="pr-4">Summary</th>
+            <th class="pr-4">Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="text-primary" href="/Admin/SiteContent/Edit/@item.Id"><i data-feather="edit"></i></a>
+                    @* <a class="text-danger" href="/Admin/User/Delete/@item.PostId"> <i data-feather="delete"></i></a> *@
+                </td>
+                <td>@item.Slug</td>
+                <td>@item.Title.Substring(0, Math.Min(@item.Title.Length, 100))</td>
+                <td>@item.Summary.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
+                <td>@item.Content.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#admin-posts').DataTable({
+                responsive: true,
+                    iDisplayLength: 25,
+                    language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                },
+                              
+            });
+        });
+    </script>
+}

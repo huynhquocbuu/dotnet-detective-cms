@@ -28,7 +28,7 @@ public class CmsDbContextSeed
     {
         try
         {
-            await SeedProducts();
+            //await SeedProducts();
             await SeedRoles();
             await SeedUsers();
             await SeedCategories();
@@ -36,7 +36,9 @@ public class CmsDbContextSeed
             await SeedPosts();
             await SeedSettings();
             await SeedFAQs();
-            
+
+            await SeedSiteContents();
+
             await _context.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -181,32 +183,32 @@ public class CmsDbContextSeed
     #endregion
     
     #region SeedProducts
-    private async Task SeedProducts()
-    {
-        if (!_context.Products.Any())
-        {
-            var products = new List<Product>
-            {
-                new()
-                {
-                    No = "Lotus",
-                    Name = "Esprit",
-                    Summary = "Nondisplaced fracture of greater trochanter of right femur",
-                    Description = "Nondisplaced fracture of greater trochanter of right femur",
-                    Price = (decimal)177940.49
-                },
-                new()
-                {
-                    No = "Cadillac",
-                    Name = "CTS",
-                    Summary = "Carbuncle of trunk",
-                    Description = "Carbuncle of trunk",
-                    Price = (decimal)114728.21
-                }
-            };
-            await _context.Products.AddRangeAsync(products);
-        }
-    }
+    //private async Task SeedProducts()
+    //{
+    //    if (!_context.Products.Any())
+    //    {
+    //        var products = new List<Product>
+    //        {
+    //            new()
+    //            {
+    //                No = "Lotus",
+    //                Name = "Esprit",
+    //                Summary = "Nondisplaced fracture of greater trochanter of right femur",
+    //                Description = "Nondisplaced fracture of greater trochanter of right femur",
+    //                Price = (decimal)177940.49
+    //            },
+    //            new()
+    //            {
+    //                No = "Cadillac",
+    //                Name = "CTS",
+    //                Summary = "Carbuncle of trunk",
+    //                Description = "Carbuncle of trunk",
+    //                Price = (decimal)114728.21
+    //            }
+    //        };
+    //        await _context.Products.AddRangeAsync(products);
+    //    }
+    //}
     #endregion
 
     #region SeedCategories
@@ -290,207 +292,207 @@ public class CmsDbContextSeed
     {
         if (!_context.Posts.Any())
         {
-            var aboutUsPost = new Post()
-            {
-                Author = "buuhq",
-                Title = "CHÚNG TÔI LÀ AI?",
-                ImageUrl = "",
-                Slug = "about-us.html",
-                IsPublished = true,
-                Summary = @"
-    <div class=""col-lg-6"">
-            <p>
-                Chúng tôi là đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
-            </p>
-            <ul>
-                <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
-                <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
-                <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
-            </ul>
-        </div>
-        <div class=""col-lg-6 pt-4 pt-lg-0"">
-            <p>
-                Hiện tại chúng tôi có hệ thống chi nhánh rộng khắp cả nước trải rộng 3 miền Bắc, Trung, Nam.
-            </p>
+//            var aboutUsPost = new Post()
+//            {
+//                Author = "buuhq",
+//                Title = "CHÚNG TÔI LÀ AI?",
+//                ImageUrl = "",
+//                Slug = "about-us.html",
+//                IsPublished = true,
+//                Summary = @"
+//    <div class=""col-lg-6"">
+//            <p>
+//                Chúng tôi là đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
+//            </p>
+//            <ul>
+//                <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
+//                <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
+//                <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
+//            </ul>
+//        </div>
+//        <div class=""col-lg-6 pt-4 pt-lg-0"">
+//            <p>
+//                Hiện tại chúng tôi có hệ thống chi nhánh rộng khắp cả nước trải rộng 3 miền Bắc, Trung, Nam.
+//            </p>
             
-    </div>
-",
-                Content = @"
-    <p>
-        Chúng tôi luôn thấu hiển và đồng hành cùng khách hàng để tìm về các giá trị đáp ứng được kỳ vọng.
-    </p>
-    <div>
-        <p>
-            Chúng tôi sở hữu đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
-        </p>
-        <ul>
-            <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
-            <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
-            <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
-        </ul>
-    </div>
-    <p>Hiện tại chúng tôi có văn phòng đại diện tại 3 miền Bắc, Trung, Nam cung cấp các dịch vụ thám tử trên phạm vi toàn quốc</p>
-",
-                Categories = _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                Tags = _context.Tags.Where(x => x.Slug.Equals("about-us")).ToList(),
-                Order = 1,
+//    </div>
+//",
+//                Content = @"
+//    <p>
+//        Chúng tôi luôn thấu hiển và đồng hành cùng khách hàng để tìm về các giá trị đáp ứng được kỳ vọng.
+//    </p>
+//    <div>
+//        <p>
+//            Chúng tôi sở hữu đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
+//        </p>
+//        <ul>
+//            <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
+//            <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
+//            <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
+//        </ul>
+//    </div>
+//    <p>Hiện tại chúng tôi có văn phòng đại diện tại 3 miền Bắc, Trung, Nam cung cấp các dịch vụ thám tử trên phạm vi toàn quốc</p>
+//",
+//                Categories = _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                Tags = _context.Tags.Where(x => x.Slug.Equals("about-us")).ToList(),
+//                Order = 1,
             
-            };
+//            };
             
-            var servicePosts = new List<Post>()
-            {
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Theo dõi ngoại tình",
-                    ImageUrl = "",
-                    Slug = "theo-doi-ngoai-tinh.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
-",
-                    Content = @"
-<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 1
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Theo dõi con cái",
-                    ImageUrl = "",
-                    Slug = "theo-doi-con-cai.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
-",
-                    Content = @"
-<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 2,
+//            var servicePosts = new List<Post>()
+//            {
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Theo dõi ngoại tình",
+//                    ImageUrl = "",
+//                    Slug = "theo-doi-ngoai-tinh.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
+//",
+//                    Content = @"
+//<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 1
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Theo dõi con cái",
+//                    ImageUrl = "",
+//                    Slug = "theo-doi-con-cai.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
+//",
+//                    Content = @"
+//<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 2,
                     
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra huyết thống",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-huyet-thong.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
-",
-                    Content = @"
-<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 3,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra huyết thống",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-huyet-thong.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
+//",
+//                    Content = @"
+//<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 3,
                     
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra số điện thoại",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-so-dien-thoai.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Truy tìm chủ nhân số điện thoại</p>
-",
-                    Content = @"
-<p>Truy tìm chủ nhân số điện thoại</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 4,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra số điện thoại",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-so-dien-thoai.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Truy tìm chủ nhân số điện thoại</p>
+//",
+//                    Content = @"
+//<p>Truy tìm chủ nhân số điện thoại</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 4,
                     
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra biển số xe",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-bien-so-xe.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Điều tra thông tin theo bản số xe</p>
-",
-                    Content = @"
-<p>Điều tra thông tin theo bản số xe</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 5,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra biển số xe",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-bien-so-xe.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Điều tra thông tin theo bản số xe</p>
+//",
+//                    Content = @"
+//<p>Điều tra thông tin theo bản số xe</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 5,
                    
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra hàng giả",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-hang-gia.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
-",
-                    Content = @"
-<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 6,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra hàng giả",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-hang-gia.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
+//",
+//                    Content = @"
+//<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 6,
                     
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra trộm cắp trong doanh nghiệp",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-trom-cap.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
-",
-                    Content = @"
-<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 7,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra trộm cắp trong doanh nghiệp",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-trom-cap.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
+//",
+//                    Content = @"
+//<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 7,
                     
-                },
-                //---------------------------
-                new()
-                {
-                    Author = "buuhq",
-                    Title = "Điều tra đối thủ cạnh tranh",
-                    ImageUrl = "",
-                    Slug = "dieu-tra-doi-thu-canh-tranh.html",
-                    IsPublished = true,
-                    Summary = @"
-<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
-",
-                    Content = @"
-<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
-",
-                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
-                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
-                    Order = 8,
+//                },
+//                //---------------------------
+//                new()
+//                {
+//                    Author = "buuhq",
+//                    Title = "Điều tra đối thủ cạnh tranh",
+//                    ImageUrl = "",
+//                    Slug = "dieu-tra-doi-thu-canh-tranh.html",
+//                    IsPublished = true,
+//                    Summary = @"
+//<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
+//",
+//                    Content = @"
+//<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
+//",
+//                    Categories =  _context.Categories.Where(x => x.Slug.Equals("home")).ToList(),
+//                    Tags = _context.Tags.Where(x => x.Slug.Equals("services")).ToList(),
+//                    Order = 8,
                     
-                },
-            };
+//                },
+//            };
 
             var blogPosts = new List<Post>()
             {
@@ -506,7 +508,7 @@ public class CmsDbContextSeed
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Order = 1,
-                    IsVisible = true,
+                   
                 },
                 //---------------------------
                 new ()
@@ -521,7 +523,7 @@ public class CmsDbContextSeed
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Order = 2,
-                    IsVisible = true,
+                   
                 },
                 //----------------------
                 new ()
@@ -536,7 +538,7 @@ public class CmsDbContextSeed
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Order = 3,
-                    IsVisible = true,
+                    
                 },
                 //----------------------
                 new ()
@@ -551,12 +553,12 @@ public class CmsDbContextSeed
                     Categories =  _context.Categories.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Tags = _context.Tags.Where(x => x.Slug.Equals("tham-tu")).ToList(),
                     Order = 4,
-                    IsVisible = true,
+                    
                 },
             };
 
-            await _context.Posts.AddAsync(aboutUsPost);
-            await _context.Posts.AddRangeAsync(servicePosts);
+            //await _context.Posts.AddAsync(aboutUsPost);
+            //await _context.Posts.AddRangeAsync(servicePosts);
             await _context.Posts.AddRangeAsync(blogPosts);
             await _context.SaveChangesAsync();
         }
@@ -672,4 +674,192 @@ public class CmsDbContextSeed
     }
 
     #endregion
+
+
+    private async Task SeedSiteContents()
+    {
+        if (!_context.SiteContents.Any())
+        {
+            var siteContents = new List<SiteContent>()
+            {
+                new SiteContent()
+                {
+                    ContentType = "AboutUs",
+                    Title = "CHÚNG TÔI LÀ AI?",
+                    ImageUrl = "",
+                    Slug = "about-us.html",
+                    Summary = @"
+    <div class=""col-lg-6"">
+            <p>
+                Chúng tôi là đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
+            </p>
+            <ul>
+                <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
+                <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
+                <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
+            </ul>
+        </div>
+        <div class=""col-lg-6 pt-4 pt-lg-0"">
+            <p>
+                Hiện tại chúng tôi có hệ thống chi nhánh rộng khắp cả nước trải rộng 3 miền Bắc, Trung, Nam.
+            </p>
+            
+    </div>
+",
+                Content = @"
+    <p>
+        Chúng tôi luôn thấu hiển và đồng hành cùng khách hàng để tìm về các giá trị đáp ứng được kỳ vọng.
+    </p>
+    <div>
+        <p>
+            Chúng tôi sở hữu đội ngũ thám tử có dày dặn kinh nghiệp có nghiệp cụ cao, đầu tư các trong thiết bị hiện đại để cung cấp tới khách các các dịch vụ thám tử đảm bảo:
+        </p>
+        <ul>
+            <li><i class=""ri-check-double-line""></i> Tính bảo mật tuyệt đối</li>
+            <li><i class=""ri-check-double-line""></i> Nhanh chóng và hợp pháp</li>
+            <li><i class=""ri-check-double-line""></i> Chi phí vô cùng hợp lý</li>
+        </ul>
+    </div>
+    <p>Hiện tại chúng tôi có văn phòng đại diện tại 3 miền Bắc, Trung, Nam cung cấp các dịch vụ thám tử trên phạm vi toàn quốc</p>
+",
+                
+                Order = 1,
+                },
+
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Theo dõi ngoại tình",
+                    ImageUrl = "",
+                    Slug = "theo-doi-ngoai-tinh.html",
+                    Summary = @"
+<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
+",
+                    Content = @"
+<p>Thông tin được giữ tuyệt mật, thu thập các thông tin theo yêu cầu, tư vấn pháp lý ra quyết định.</p>
+",
+                   
+                    Order = 1
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Theo dõi con cái",
+                    ImageUrl = "",
+                    Slug = "theo-doi-con-cai.html",
+                    Summary = @"
+<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
+",
+                    Content = @"
+<p>Theo dõi hoạt động hành vi con cái, giúp các bậc phụ huynh đánh giá hành vi, can thiệp hợp lý</p>
+",
+     
+                    Order = 2,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra huyết thống",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-huyet-thong.html",
+                    
+                    Summary = @"
+<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
+",
+                    Content = @"
+<p>Điều tra huyết thống cha con, mẹ con, ông cháu, bà cháu ...</p>
+",
+                    Order = 3,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra số điện thoại",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-so-dien-thoai.html",                 
+                    Summary = @"
+<p>Truy tìm chủ nhân số điện thoại</p>
+",
+                    Content = @"
+<p>Truy tìm chủ nhân số điện thoại</p>
+",
+                    
+                    Order = 4,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra biển số xe",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-bien-so-xe.html",                   
+                    Summary = @"
+<p>Điều tra thông tin theo bản số xe</p>
+",
+                    Content = @"
+<p>Điều tra thông tin theo bản số xe</p>
+",
+                    Order = 5,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra hàng giả",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-hang-gia.html",                 
+                    Summary = @"
+<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
+",
+                    Content = @"
+<p>Điều tra nguồn gốc hàng giả, hàng nháy</p>
+",
+                    
+                    Order = 6,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra trộm cắp trong doanh nghiệp",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-trom-cap.html",
+                    Summary = @"
+<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
+",
+                    Content = @"
+<p>Điều tra các vụ việc trộm cắp trong doanh nghiệp</p>
+",
+                    Order = 7,
+
+                },
+                //---------------------------
+                new()
+                {
+                    ContentType = "Service",
+                    Title = "Điều tra đối thủ cạnh tranh",
+                    ImageUrl = "",
+                    Slug = "dieu-tra-doi-thu-canh-tranh.html",
+                    Summary = @"
+<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
+",
+                    Content = @"
+<p>Điều tra thông tin về đối thủ cạnh tranh để có các điều chiến lược phù hợp cho doanh nghiệp</p>
+",
+                    Order = 8,
+
+                },
+            };
+            await _context.SiteContents.AddRangeAsync(siteContents);
+        }
+    }
 }
