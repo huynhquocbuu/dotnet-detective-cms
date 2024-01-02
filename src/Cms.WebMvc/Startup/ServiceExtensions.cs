@@ -8,12 +8,9 @@ using Cms.Infrastructure.Persistence.Entities;
 using Cms.Infrastructure.Persistence.Interfaces;
 using Cms.Infrastructure.Persistence.Repositories;
 using Configuration;
-using Configuration.Extensions;
-using Configuration.Persistence.Interfaces;
-using Configuration.Persistence.Repositories;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Cms.WebMvc.Startup;
 
@@ -26,11 +23,20 @@ public static class ServiceExtensions
         //var connectionString = configuration.GetConnectionString("DefaultConnection");
         if (databaseSettings == null || string.IsNullOrEmpty(databaseSettings.DefaultConnection))
             throw new ArgumentNullException("Connection string is not configured.");
+        
+        // services.AddDbContextFactory<CmsDbContext>((sp, options) =>
+        // {
+        //     options.UseSqlServer(databaseSettings.DefaultConnection, builder => 
+        //                 builder.MigrationsAssembly(typeof(CmsDbContext).Assembly.FullName));
+        // }).AddScoped<CmsDbContext>(p => p.GetRequiredService<IDbContextFactory<CmsDbContext>>().CreateDbContext());
+        
         services.AddDbContext<CmsDbContext>(options =>
         {
             options.UseSqlServer(databaseSettings.DefaultConnection,
                 builder => 
                     builder.MigrationsAssembly(typeof(CmsDbContext).Assembly.FullName));
+            //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            options.EnableSensitiveDataLogging();
         });
         
         services.AddIdentity<User, Role>()
@@ -53,8 +59,8 @@ public static class ServiceExtensions
         services.AddScoped<CmsDbContextMigrate>();
         services.AddScoped<CmsDbContextSeed>();
 
-        services.AddScoped(typeof(IRepositoryBase<,,>), typeof(RepositoryBase<,,>));
-        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+        //services.AddScoped(typeof(IRepositoryBase<,,>), typeof(RepositoryBase<,,>));
+        //services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
@@ -62,10 +68,15 @@ public static class ServiceExtensions
         services.AddScoped<ISettingRepository, SettingRepository>();
         services.AddScoped<IFAQRepository, FAQRepository>();
         services.AddScoped<ISiteContentRepository, SiteContentRepository>();
+        services.AddScoped<IPostCategoryRepository, PostCategoryRepository>();
+        services.AddScoped<IPostTagRepository, PostTagRepository>();
 
         services.AddAutoMapper(cfg => cfg.AddProfile(new ProductMappingProfile()));
 
         //services.AddScoped(typeof(ISmtpEmailService), typeof(SmtpEmailService));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddScoped<IAuthUseCase, AuthService>();
         services.AddScoped<IHomeUseCase, HomeService>();
         services.AddScoped<IPostPublicUseCase, PostPublicService>();

@@ -8,15 +8,15 @@ namespace Cms.Application.Admin.Services;
 
 public class TagService : ITagUseCase
 {
-    private readonly ITagRepository _tagRepository;
-
-    public TagService(ITagRepository tagRepository)
+    private readonly IUnitOfWork _uow;
+    public TagService(IUnitOfWork uow)
     {
-        _tagRepository = tagRepository;
+        _uow = uow;
     }
+
     public async Task<List<TagDto>> GetAllAsync()
     {
-        var tags = await _tagRepository.FindAll()
+        var tags = await _uow.TagRepository.FindAll()
             .Select(x => new TagDto()
             {
                 Id = x.Id,
@@ -28,7 +28,7 @@ public class TagService : ITagUseCase
 
     public async Task<TagDto> GetDtoAsync(long id)
     {
-        return await _tagRepository
+        return await _uow.TagRepository
             .FindByCondition(x => x.Id.Equals(id))
             .Select(x => new TagDto()
             {
@@ -40,20 +40,21 @@ public class TagService : ITagUseCase
 
     public async Task EditAsync(TagDto dto)
     {
-        var entity = _tagRepository
+        var entity = _uow.TagRepository
             .FindByCondition(x => x.Id.Equals(dto.Id), true)
             .FirstOrDefault();
         entity.Title = dto.Title;
         entity.Slug = dto.Slug;
-        await _tagRepository.SaveChangesAsync();
+        await _uow.CommitAsync();
     }
 
     public async Task DeleteAsync(long id)
     {
-        var entity = _tagRepository
+        var entity = _uow.TagRepository
             .FindByCondition(x => x.Id.Equals(id), true)
             .FirstOrDefault();
-        await _tagRepository.DeleteAsync(entity);
+        await _uow.TagRepository.DeleteAsync(entity);
+        await _uow.CommitAsync();
     }
 
     public async Task AddAsync(TagDto dto)
@@ -64,6 +65,7 @@ public class TagService : ITagUseCase
             IsVisible = true,
             Slug = dto.Slug
         };
-        await _tagRepository.CreateAsync(entity);
+        await _uow.TagRepository.CreateAsync(entity);
+        await _uow.CommitAsync();
     }
 }

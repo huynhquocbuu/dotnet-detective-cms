@@ -8,7 +8,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class CategoryRepository : RepositoryBase<Category, long, CmsDbContext>, ICategoryRepository
 {
-    public CategoryRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public CategoryRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
 

@@ -116,25 +116,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    No = table.Column<string>(type: "varchar(150)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(250)", nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    LastModifiedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -291,30 +272,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryPost",
-                columns: table => new
-                {
-                    CategoriesId = table.Column<long>(type: "bigint", nullable: false),
-                    PostsId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryPost", x => new { x.CategoriesId, x.PostsId });
-                    table.ForeignKey(
-                        name: "FK_CategoryPost_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryPost_Posts_PostsId",
-                        column: x => x.PostsId,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -363,24 +320,48 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostTag",
+                name: "PostCategories",
                 columns: table => new
                 {
-                    PostsId = table.Column<long>(type: "bigint", nullable: false),
-                    TagsId = table.Column<long>(type: "bigint", nullable: false)
+                    PostId = table.Column<long>(type: "bigint", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostTag", x => new { x.PostsId, x.TagsId });
+                    table.PrimaryKey("PK_PostCategories", x => new { x.CategoryId, x.PostId });
                     table.ForeignKey(
-                        name: "FK_PostTag_Posts_PostsId",
-                        column: x => x.PostsId,
+                        name: "FK_PostCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostCategories_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostTags",
+                columns: table => new
+                {
+                    PostId = table.Column<long>(type: "bigint", nullable: false),
+                    TagId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostTags", x => new { x.PostId, x.TagId });
+                    table.ForeignKey(
+                        name: "FK_PostTags_Posts_PostId",
+                        column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PostTag_Tags_TagsId",
-                        column: x => x.TagsId,
+                        name: "FK_PostTags_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -438,11 +419,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 filter: "[Slug] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryPost_PostsId",
-                table: "CategoryPost",
-                column: "PostsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comments_ParentId",
                 table: "Comments",
                 column: "ParentId");
@@ -458,6 +434,11 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PostCategories_PostId",
+                table: "PostCategories",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_Slug",
                 table: "Posts",
                 column: "Slug",
@@ -465,15 +446,9 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 filter: "[Slug] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostTag_TagsId",
-                table: "PostTag",
-                column: "TagsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_No",
-                table: "Product",
-                column: "No",
-                unique: true);
+                name: "IX_PostTags_TagId",
+                table: "PostTags",
+                column: "TagId");
         }
 
         /// <inheritdoc />
@@ -495,9 +470,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CategoryPost");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -507,10 +479,10 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 name: "Metas");
 
             migrationBuilder.DropTable(
-                name: "PostTag");
+                name: "PostCategories");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "PostTags");
 
             migrationBuilder.DropTable(
                 name: "Settings");

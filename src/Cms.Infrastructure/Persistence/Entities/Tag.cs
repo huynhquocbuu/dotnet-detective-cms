@@ -14,5 +14,5 @@ public class Tag : EntityBase<long>
     public bool IsVisible { get; set; }
     
     //public List<Post> Posts { get; } = new();
-    public ICollection<Post> Posts { get; set; }
+    public List<Post> Posts { get; set; }
 }

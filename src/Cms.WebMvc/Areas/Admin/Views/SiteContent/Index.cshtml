@@ -10,9 +10,10 @@
     <table id="admin-posts" class="table" style="width:100%">
         <thead>
         <tr>
-            @* <th class="pr-4"><a href="/Admin/SiteContent/Add" class="text-primary"><i data-feather="plus-circle"> </i> </a></th> *@
-            <th class="pr-4">##</th>
+            <th class="pr-4" style="min-width: 120px;"><a href="/Admin/SiteContent/Add" class="text-primary"><i data-feather="plus-circle"> </i> Thêm Service</a></th>
+            
             <th class="pr-4">Slug</th>
+            <th class="pr-4">ContentType</th>
             <th class="pr-4">Title</th>
             <th class="pr-4">Summary</th>
             <th class="pr-4">Content</th>
@@ -23,13 +24,17 @@
         {
             <tr>
                 <td>
-                    <a class="text-primary" href="/Admin/SiteContent/Edit/@item.Id"><i data-feather="edit"></i></a>
-                    @* <a class="text-danger" href="/Admin/User/Delete/@item.PostId"> <i data-feather="delete"></i></a> *@
+                    <a class="text-primary" href="/Admin/SiteContent/Edit/@item.Id"><i data-feather="edit"></i> Sửa</a>
+                    @if(item.ContentType.Equals("Service")){
+                        <a class="text-danger" href="/Admin/SiteContent/Delete/@item.Id"> <i data-feather="delete"></i> Xoá</a>
+                    }
+                    
                 </td>
                 <td>@item.Slug</td>
+                <td>@item.ContentType</td>
                 <td>@item.Title.Substring(0, Math.Min(@item.Title.Length, 100))</td>
                 <td>@item.Summary.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
-                <td>@item.Content.Substring(0, Math.Min(@item.Summary.Length, 100))</td>
+                <td>@item.Content.Substring(0, Math.Min(@item.Content.Length, 100))</td>
             </tr>
         }
 

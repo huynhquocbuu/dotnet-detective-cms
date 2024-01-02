@@ -7,9 +7,19 @@ namespace Cms.Infrastructure.Persistence;
 
 public class CmsDbContext : IdentityDbContext<User, Role, Guid>
 {
+    private readonly string _connectionString;
+
+    // public CmsDbContext(string connectionString)
+    // {
+    //     _connectionString = connectionString;
+    // }
+
     public CmsDbContext(DbContextOptions<CmsDbContext> options) : base(options)
     {
+        
     }
+
+    
     
     //public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -21,13 +31,32 @@ public class CmsDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<FAQ> FAQs { get; set; }
     public DbSet<SiteContent> SiteContents { get; set; }
 
+    
+    public DbSet<PostTag> PostTags { get; set; }
+    public DbSet<PostCategory> PostCategories { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Product>().HasIndex(x => x.No)
-            .IsUnique();
-        modelBuilder.Entity<Post>().HasIndex(x => x.Slug)
-            .IsUnique();
+        // modelBuilder.Entity<Product>().HasIndex(x => x.No)
+        //     .IsUnique();
+        modelBuilder.Entity<Post>()
+            .HasIndex(x => x.Slug).IsUnique();
+        
+        modelBuilder.Entity<Post>()
+            .HasMany(e => e.Categories)
+            .WithMany(e => e.Posts)
+            .UsingEntity<PostCategory>(
+                l => l.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId),
+                r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
+        
+        modelBuilder.Entity<Post>()
+            .HasMany(e => e.Tags)
+            .WithMany(e => e.Posts)
+            .UsingEntity<PostTag>(
+                l => l.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId),
+                r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
+        
+        
         modelBuilder.Entity<Category>().HasIndex(x => x.Slug)
             .IsUnique();
     }

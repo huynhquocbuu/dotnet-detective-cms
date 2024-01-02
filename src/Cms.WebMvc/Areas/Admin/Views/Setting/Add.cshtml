@@ -4,10 +4,10 @@
     
 }
 
-<div class="container">
+
     <h4>Thêm Cấu hình</h4>
     <form method="post">
-        <input type="hidden" asp-for="Id">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label class="tx-bold"  asp-for="Key">Cấu hình</label>
@@ -27,5 +27,3 @@
         
 
     </form>
-    <!-- /.row-->
-</div>

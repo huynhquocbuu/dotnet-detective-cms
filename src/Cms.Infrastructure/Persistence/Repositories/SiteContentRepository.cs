@@ -13,7 +13,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class SiteContentRepository : RepositoryBase<SiteContent, long, CmsDbContext>, ISiteContentRepository
 {
-    public SiteContentRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public SiteContentRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
     public async Task DeleteByIdAsync(long id)

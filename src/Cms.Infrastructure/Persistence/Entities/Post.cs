@@ -25,13 +25,13 @@ public class Post : EntityAuditBase<long>
 
     public int Order { get; set; }
     
-    public ICollection<Category> Categories { get; set; }
+    public List<Category> Categories { get; set; }
 
     //public List<Category> Categories { get; set; } = new();
     //public List<Tag> Tags { get; set; } = new();
-    public ICollection<Tag> Tags { get; set; }
+    public List<Tag> Tags { get; set; }
     
-    public ICollection<Comment> Comments { get; set; }
-    public ICollection<Meta> Metas { get; set;  }
+    public List<Comment> Comments { get; set; }
+    public List<Meta> Metas { get; set;  }
 
 }

@@ -9,7 +9,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class SettingRepository : RepositoryBase<Setting, long, CmsDbContext>, ISettingRepository
 {
-    public SettingRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public SettingRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
 

@@ -6,43 +6,45 @@ namespace Cms.Application.Admin.Services;
 
 public class FAQService : IFAQUseCase
 {
-    private readonly IFAQRepository _faqRepository;
+    private readonly IUnitOfWork _uow;
 
-    public FAQService(IFAQRepository faqRepository)
+    public FAQService(IUnitOfWork uow)
     {
-        _faqRepository = faqRepository;
+        _uow = uow;
     }
     public async Task<List<FAQ>> GetAllAsync()
     {
-        var faqs = await _faqRepository.GetAllAsync();
+        var faqs = await _uow.FAQRepository.GetAllAsync();
         return faqs.ToList();
     }
 
     public async Task<FAQ> GetAsync(long id)
     {
-        return await _faqRepository.GetByIdAsync(id);
+        return await _uow.FAQRepository.GetByIdAsync(id);
     }
 
     public async Task EditAsync(FAQ editedEntity)
     {
-        var entity = _faqRepository
+        var entity = _uow.FAQRepository
             .FindByCondition(x => x.Id.Equals(editedEntity.Id), true)
             .FirstOrDefault();
         entity.Question = editedEntity.Question;
         entity.Answer = editedEntity.Answer;
-        await _faqRepository.SaveChangesAsync();
+        await _uow.CommitAsync();
     }
 
     public async Task DeleteAsync(long id)
     {
-        var entity = _faqRepository
+        var entity = _uow.FAQRepository
             .FindByCondition(x => x.Id.Equals(id), true)
             .FirstOrDefault();
-        await _faqRepository.DeleteAsync(entity);
+        await _uow.FAQRepository.DeleteAsync(entity);
+        await _uow.CommitAsync();
     }
 
     public async Task AddAsync(FAQ entity)
     {
-        await _faqRepository.CreateAsync(entity);
+        await _uow.FAQRepository.CreateAsync(entity);
+        await _uow.CommitAsync();
     }
 }

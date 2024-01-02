@@ -11,29 +11,37 @@ namespace Cms.Application.Admin.Services;
 
 public class PostService : IPostUseCase
 {
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly ITagRepository _tagRepository;
-    private readonly IPostRepository _postRepository;
+    //private readonly ICategoryRepository _categoryRepository;
+    //private readonly ITagRepository _tagRepository;
+    //private readonly IPostRepository _postRepository;
     private readonly CmsConfiguration _cmsConfiguration;
     private readonly CmsDbContext _context;
-
+    //private readonly IPostCategoryRepository _postCategoryRepository;
+    //private readonly IPostTagRepository _postTagRepository;
+    private readonly IUnitOfWork _uow;
     public PostService(
         CmsConfiguration cmsConfiguration,
-        ICategoryRepository categoryRepository,
-        ITagRepository tagRepository,
-        IPostRepository postRepository,
-        CmsDbContext context)
+        //ICategoryRepository categoryRepository,
+        //ITagRepository tagRepository,
+        //IPostRepository postRepository,
+        //IPostCategoryRepository postCategoryRepository,
+        //IPostTagRepository postTagRepository,
+        CmsDbContext context,
+        IUnitOfWork uow)
     {
         _cmsConfiguration = cmsConfiguration;
-        _categoryRepository = categoryRepository;
-        _tagRepository = tagRepository;
-        _postRepository = postRepository;
+        //_categoryRepository = categoryRepository;
+        //_tagRepository = tagRepository;
+        //_postRepository = postRepository;
         _context = context;
+        //_postCategoryRepository = postCategoryRepository;
+        //_postTagRepository = postTagRepository;
+        _uow = uow;
     }
 
     public async Task<List<PostDto>> GetAllAsync()
     {
-        return _postRepository.FindAll()
+        return _uow.PostRepository.FindAll()
             .Include(inc1 => inc1.Categories)
             .Include(inc2 => inc2.Tags)
             .Select(x => new PostDto()
@@ -51,8 +59,8 @@ public class PostService : IPostUseCase
 
     public async Task<PostDto> GetNewPostDto()
     {
-        var categories = await _categoryRepository.GetCategoriesAsync();
-        var tags = await _tagRepository.GetTagsAsync();
+        var categories = await _uow.CategoryRepository.GetCategoriesAsync();
+        var tags = await _uow.TagRepository.GetTagsAsync();
         return new PostDto()
         {
             Categories = categories.Select(x => new CategoryDto()
@@ -93,7 +101,8 @@ public class PostService : IPostUseCase
         //insert Db
         var entity = await ConvertToPostEntity(dto);
         entity.Author = authorId;
-        await _postRepository.CreateAsync(entity);
+        await _uow.PostRepository.CreateAsync(entity);
+        await _uow.CommitAsync();
     }
 
     private async Task<Post> ConvertToPostEntity(PostDto dto)
@@ -101,13 +110,13 @@ public class PostService : IPostUseCase
         var categories = new List<Category>();
         foreach (var id in dto.SelectedCategories)
         {
-            categories.Add(await _categoryRepository.GetCategoryAsync(id, true));
+            categories.Add(await _uow.CategoryRepository.GetCategoryAsync(id, true));
         }
 
         var tags = new List<Tag>();
         foreach (var id in dto.SelectedTags)
         {
-            tags.Add(await _tagRepository.GetTagAsync(id, true));
+            tags.Add(await _uow.TagRepository.GetTagAsync(id, true));
         }
         return new Post()
         {
@@ -125,14 +134,13 @@ public class PostService : IPostUseCase
 
     public async Task<PostDto> GetEditPostDto(long id)
     {
-        var postEntity = await _postRepository.FindByCondition(x => x.Id.Equals(id))
+        var postEntity = await _uow.PostRepository.FindByCondition(x => x.Id.Equals(id))
             .Include(incl1 => incl1.Categories)
             .Include(incl2 => incl2.Tags)
             .FirstOrDefaultAsync();
-        //postEntity.Categories
 
-        var categories = await _categoryRepository.GetCategoriesAsync();
-        var tags = await _tagRepository.GetTagsAsync();
+        var categories = await _uow.CategoryRepository.GetCategoriesAsync();
+        var tags = await _uow.TagRepository.GetTagsAsync();
         return new PostDto()
         {
             PostId = id,
@@ -161,36 +169,18 @@ public class PostService : IPostUseCase
 
     public async Task<int> DoEdit(PostDto model)
     {
-        var postEntity = await _postRepository
-            .FindByCondition(x => x.Id == model.PostId, false)
-           .Include(incl1 => incl1.Categories)
-            .Include(incl2 => incl2.Tags)
+        var postEntity = await _uow.PostRepository
+            .FindByCondition(x => x.Id == model.PostId, true)
             .FirstOrDefaultAsync();
-        
-        //postEntity.Categories = new List<Category>();
-        //postEntity.Tags = new List<Tag>();
-        postEntity.Categories.Clear(); postEntity.Tags.Clear();
-        foreach (var item in model.SelectedCategories)
-        {
-            var cat = await _categoryRepository.GetByIdAsync(item, false);
-            postEntity.Categories.Add(cat);
-        }
-        foreach (var item in model.SelectedTags)
-        {
-            var tag = await _tagRepository.GetByIdAsync(item, false);
-            postEntity.Tags.Add(tag);
-        }
 
         postEntity.Slug = model.Slug;
         postEntity.Title = model.Title;
         postEntity.Summary = model.Summary;
         postEntity.Content = model.Content;
 
-        //_context.ChangeTracker.Clear();
-        _postRepository.Update(postEntity);
-
-       _context.SaveChanges();
-        //return await _postRepository.SaveChangesAsync();
-        return 0;
+        await _uow.PostCategoryRepository.UpdatePostCatAsync(model.PostId, model.SelectedCategories);
+        await _uow.PostTagRepository.UpdatePostTagAsync(model.PostId, model.SelectedTags);
+        
+        return await _context.SaveChangesAsync();
     }
 }

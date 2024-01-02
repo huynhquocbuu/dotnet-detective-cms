@@ -10,7 +10,7 @@
     <table id="admin-posts" class="table" style="width:100%">
         <thead>
         <tr>
-            <th class="pr-4"><a href="/Admin/Post/Add" class="text-primary"><i data-feather="plus-circle"> </i> </a></th>
+            <th class="pr-4" style="min-width: 100px;"><a href="/Admin/Post/Add" class="text-primary"><i data-feather="plus-circle"> </i> Thêm</a></th>
             <th class="pr-4">Slug</th>
             <th class="pr-4">Title</th>
             <th class="pr-4">Summary</th>
@@ -22,8 +22,8 @@
         {
             <tr>
                 <td>
-                    <a class="text-primary" href="/Admin/Post/Edit/@item.PostId"><i data-feather="edit"></i></a>
-                    <a class="text-danger" href="/Admin/User/Delete/@item.PostId"> <i data-feather="delete"></i></a>
+                    <a class="text-primary" href="/Admin/Post/Edit/@item.PostId"><i data-feather="edit"></i> Sửa</a>
+                    <a class="text-danger" href="/Admin/User/Delete/@item.PostId"> <i data-feather="delete"></i> Xoá</a>
                 </td>
                 <td>@item.Slug</td>
                 <td>@item.Title.Substring(0, Math.Min(@item.Title.Length, 100))</td>

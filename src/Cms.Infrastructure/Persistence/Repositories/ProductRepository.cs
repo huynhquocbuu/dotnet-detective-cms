@@ -8,7 +8,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class ProductRepository : RepositoryBase<Product, long, CmsDbContext>, IProductRepository
 {
-    public ProductRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public ProductRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
    

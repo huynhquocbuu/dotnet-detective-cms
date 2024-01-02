@@ -14,7 +14,39 @@ public class UserService : IUserUseCase
     {
         _userManager = userManager;
     }
-    
+
+    public async Task AddAsync(UserDto dto)
+    {
+            User entity = new()
+            {
+                UserName = dto.Username,
+                Email = $"{dto.Username}@gmail.com",
+                AuthType = 'D',
+                Fullname = dto.FullName,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            };
+            var aaa = await _userManager.CreateAsync(entity, dto.Password);
+            await _userManager.AddToRolesAsync(
+                entity, new string[] {"Admin"}
+            );
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        await _userManager.DeleteAsync(user);
+    }
+
+    public async Task EditAsync(UserDto dto)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id.Equals(dto.Id));
+        await _userManager.RemovePasswordAsync(user);
+        await _userManager.AddPasswordAsync(user, dto.Password);
+
+        user.Fullname = dto.FullName;
+        await _userManager.UpdateAsync(user);
+    }
 
     public async Task<List<UserDto>> GetAllAsync()
     {
@@ -25,5 +57,16 @@ public class UserService : IUserUseCase
             Username = x.UserName,
             FullName = x.Fullname
         }).ToListAsync();
+    }
+
+    public async Task<UserDto> GetByIdAsync(Guid id)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        return new UserDto()
+        {
+            Id = user.Id,
+            Username = user.UserName,
+            FullName = user.Fullname
+        };
     }
 }

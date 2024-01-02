@@ -8,7 +8,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class PostRepository : RepositoryBase<Post, long, CmsDbContext>, IPostRepository
 {
-    public PostRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public PostRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
    

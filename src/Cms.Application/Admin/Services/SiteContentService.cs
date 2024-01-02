@@ -12,30 +12,43 @@ namespace Cms.Application.Admin.Services;
 
 public class SiteContentService : ISiteContentUseCase
 {
-    private readonly ISiteContentRepository _repository;
-    public SiteContentService(ISiteContentRepository repository)
+    private readonly IUnitOfWork _uow;
+    public SiteContentService(IUnitOfWork uow)
     {
-        _repository = repository;
+        _uow = uow;
+    }
+
+    public async Task AddAsync(SiteContent model)
+    {
+        await _uow.SiteContentRepository.CreateAsync(model);
+        await _uow.CommitAsync();
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        var entity = await _uow.SiteContentRepository.GetByIdAsync(id);
+        await _uow.SiteContentRepository.DeleteAsync(entity);
+        await _uow.CommitAsync();
     }
 
     public async Task<int> EditAsync(SiteContent model)
     {
-        _repository.Update(model);
-        return await _repository.SaveChangesAsync();
+        _uow.SiteContentRepository.Update(model);
+        return await _uow.CommitAsync();
     }
 
     public async Task<List<SiteContent>> GetAllAsync()
     {
-        return await _repository.FindAll().ToListAsync();
+        return await _uow.SiteContentRepository.FindAll().ToListAsync();
     }
 
     public async Task<SiteContent> GetByIdAsync(long id)
     {
-        return await _repository.GetByIdAsync(id);
+        return await _uow.SiteContentRepository.GetByIdAsync(id);
     }
 
     public async Task<SiteContent> GetBySlugAsync(string slug)
     {
-        return await _repository.FindByCondition(x => x.Slug == slug).FirstOrDefaultAsync();
+        return await _uow.SiteContentRepository.FindByCondition(x => x.Slug == slug).FirstOrDefaultAsync();
     }
 }

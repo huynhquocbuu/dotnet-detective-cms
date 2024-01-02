@@ -20,6 +20,20 @@ public class SiteContentController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> Add()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> Add(SiteContent model)
+    {
+        model.ContentType = "Service";
+        await _useCase.AddAsync(model);
+        return Redirect("/Admin/SiteContent");
+    }
+
     public async Task<IActionResult> Edit(long id)
     {
         var model = await _useCase.GetByIdAsync(id);
@@ -31,6 +45,12 @@ public class SiteContentController : Controller
     public async Task<IActionResult> Edit(SiteContent model)
     {
         var eff = await _useCase.EditAsync(model);
+        return Redirect("/Admin/SiteContent");
+    }
+
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _useCase.DeleteAsync(id);
         return Redirect("/Admin/SiteContent");
     }
 }

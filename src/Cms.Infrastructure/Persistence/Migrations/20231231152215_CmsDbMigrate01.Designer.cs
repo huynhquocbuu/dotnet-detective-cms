@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cms.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CmsDbContext))]
-    [Migration("20231229061339_CmsDbMigrate01")]
+    [Migration("20231231152215_CmsDbMigrate01")]
     partial class CmsDbMigrate01
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CategoryPost", b =>
-                {
-                    b.Property<long>("CategoriesId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PostsId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("CategoriesId", "PostsId");
-
-                    b.HasIndex("PostsId");
-
-                    b.ToTable("CategoryPost");
-                });
 
             modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.Category", b =>
                 {
@@ -205,43 +190,34 @@ namespace Cms.Infrastructure.Persistence.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.Product", b =>
+            modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.PostCategory", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    b.Property<long>("PostId")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .HasColumnType("datetimeoffset");
+                    b.HasKey("CategoryId", "PostId");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                    b.HasIndex("PostId");
 
-                    b.Property<DateTimeOffset?>("LastModifiedDate")
-                        .HasColumnType("datetimeoffset");
+                    b.ToTable("PostCategories");
+                });
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)");
+            modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.PostTag", b =>
+                {
+                    b.Property<long>("PostId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("No")
-                        .IsRequired()
-                        .HasColumnType("varchar(150)");
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(12,2)");
+                    b.HasKey("PostId", "TagId");
 
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(255)");
+                    b.HasIndex("TagId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("No")
-                        .IsUnique();
-
-                    b.ToTable("Product");
+                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.Role", b =>
@@ -550,36 +526,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PostTag", b =>
-                {
-                    b.Property<long>("PostsId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TagsId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PostsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("PostTag");
-                });
-
-            modelBuilder.Entity("CategoryPost", b =>
-                {
-                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.Category", b =>
                 {
                     b.HasOne("Cms.Infrastructure.Persistence.Entities.Category", "Parent")
@@ -611,6 +557,36 @@ namespace Cms.Infrastructure.Persistence.Migrations
                     b.HasOne("Cms.Infrastructure.Persistence.Entities.Post", null)
                         .WithMany("Metas")
                         .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.PostCategory", b =>
+                {
+                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cms.Infrastructure.Persistence.Entities.PostTag", b =>
+                {
+                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -660,21 +636,6 @@ namespace Cms.Infrastructure.Persistence.Migrations
                     b.HasOne("Cms.Infrastructure.Persistence.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PostTag", b =>
-                {
-                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cms.Infrastructure.Persistence.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

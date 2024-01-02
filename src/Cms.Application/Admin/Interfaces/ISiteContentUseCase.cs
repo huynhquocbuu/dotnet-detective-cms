@@ -14,4 +14,8 @@ public interface ISiteContentUseCase
 
     Task<int> EditAsync(SiteContent model);
     Task<SiteContent> GetBySlugAsync(string slug);
+
+    Task AddAsync(SiteContent model);
+
+    Task DeleteAsync(long id);
 }

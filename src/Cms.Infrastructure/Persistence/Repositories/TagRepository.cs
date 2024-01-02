@@ -8,7 +8,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class TagRepository: RepositoryBase<Tag, long, CmsDbContext>, ITagRepository
 {
-    public TagRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public TagRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
 

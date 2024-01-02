@@ -2,21 +2,22 @@ using Cms.Application.Admin.Interfaces;
 using Cms.Application.Admin.Models.Post;
 using Cms.Infrastructure.Persistence.Entities;
 using Cms.Infrastructure.Persistence.Interfaces;
+using Cms.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cms.Application.Admin.Services;
 
 public class CategoryService : ICategoryUseCase
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _uow;
 
-    public CategoryService(ICategoryRepository categoryRepository)
+    public CategoryService(IUnitOfWork uow)
     {
-        _categoryRepository = categoryRepository;
+        _uow = uow;
     }
     public async Task<List<CategoryDto>> GetAllAsync()
     {
-        var categories = await _categoryRepository.GetCategoriesAsync();
+        var categories = await _uow.CategoryRepository.GetCategoriesAsync();
         return categories.Select(x => new CategoryDto()
         {
             Id = x.Id,
@@ -27,7 +28,7 @@ public class CategoryService : ICategoryUseCase
 
     public async Task<CategoryDto> GetDtoAsync(long id)
     {
-        return await _categoryRepository
+        return await _uow.CategoryRepository
             .FindByCondition(x => x.Id.Equals(id))
             .Select(x => new CategoryDto()
             {
@@ -39,20 +40,23 @@ public class CategoryService : ICategoryUseCase
 
     public async Task EditAsync(CategoryDto dto)
     {
-        var entity = _categoryRepository
+        var entity = _uow.CategoryRepository
             .FindByCondition(x => x.Id.Equals(dto.Id), true)
             .FirstOrDefault();
         entity.Title = dto.Title;
         entity.Slug = dto.Slug;
-        await _categoryRepository.SaveChangesAsync();
+        //await _categoryRepository.SaveChangesAsync();
+        await _uow.CommitAsync();
     }
 
     public async Task DeleteAsync(long id)
     {
-        var entity = _categoryRepository
+        var entity = _uow.CategoryRepository
             .FindByCondition(x => x.Id.Equals(id), true)
             .FirstOrDefault();
-        await _categoryRepository.DeleteAsync(entity);
+        await _uow.CategoryRepository.DeleteAsync(entity);
+
+        await _uow.CommitAsync();
     }
 
     public async Task AddAsync(CategoryDto dto)
@@ -63,6 +67,7 @@ public class CategoryService : ICategoryUseCase
             Content = dto.Title,
             Slug = dto.Slug
         };
-        await _categoryRepository.CreateAsync(entity);
+        await _uow.CategoryRepository.CreateAsync(entity);
+        await _uow.CommitAsync();
     }
 }

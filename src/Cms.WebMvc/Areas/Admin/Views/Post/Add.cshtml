@@ -5,9 +5,9 @@
     Layout = "_AdminLayout";
 }
 
-<div class="container-fluid">
     <h4 class="tx-bold">Thêm bài viết</h4>
     <form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label class="tx-bold"  asp-for="Title"></label>
@@ -92,9 +92,6 @@
 
     </form>
 
-    
-    <!-- /.row-->
-</div>
 
 @section Scripts {
 

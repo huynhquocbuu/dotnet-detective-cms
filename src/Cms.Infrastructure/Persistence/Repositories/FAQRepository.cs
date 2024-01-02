@@ -9,7 +9,7 @@ namespace Cms.Infrastructure.Persistence.Repositories;
 
 public class FAQRepository : RepositoryBase<FAQ, long, CmsDbContext>, IFAQRepository
 {
-    public FAQRepository(CmsDbContext dbContext, IUnitOfWork<CmsDbContext> unitOfWork) : base(dbContext, unitOfWork)
+    public FAQRepository(CmsDbContext dbContext) : base(dbContext)
     {
     }
 
