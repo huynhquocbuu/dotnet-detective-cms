@@ -35,7 +35,7 @@ public class AuthController : Controller
         if (signInResult.Succeeded)
         {
             return model.ReturnUrl.IsNullOrEmpty()
-                ? Redirect("/admin/dashboard")
+                ? Redirect("/Admin/SiteContent")
                 : Redirect(model.ReturnUrl);
         }
 

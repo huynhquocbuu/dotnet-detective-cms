@@ -31,3 +31,17 @@
 #services .icon-box a {
     font-family: "Agbalumo", sans-serif;
 }
+
+.supports {
+    position: fixed;
+    right: 40px;
+    bottom: 250px;
+    z-index: 999;
+}
+
+.supports a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
