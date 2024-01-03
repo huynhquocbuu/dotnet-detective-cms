@@ -40,7 +40,7 @@ public class PostController : Controller
         string tempHtml = HttpUtility.HtmlDecode(model.Content);
         await _useCase.AddPost(model, User.Identity.Name);
         
-        return Redirect($"/Admin/Dashboard");
+        return Redirect($"/Admin/Post");
     }
 
     public async Task<IActionResult> Edit(long id)
