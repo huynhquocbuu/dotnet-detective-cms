@@ -106,7 +106,7 @@ public class CmsDbContextSeed
     {
         if (!_userManager.Users.Any())
         {
-            string defaultPassword = "AnhKien@2023";
+            string defaultPassword = "AnhKien@2024";
             User u1 = new()
             {
                 UserName = "buuhq",
@@ -218,12 +218,12 @@ public class CmsDbContextSeed
         {
             var categories = new List<Category>()
             {
-                new()
-                {
-                    Title = "Trang chủ",
-                    Content = "Trang chủ",
-                    Slug = "home"
-                },
+                // new()
+                // {
+                //     Title = "Trang chủ",
+                //     Content = "Trang chủ",
+                //     Slug = "home"
+                // },
                 new()
                 {
                     Title = "Tin Thám tử",
@@ -253,18 +253,18 @@ public class CmsDbContextSeed
         {
             var tags = new List<Tag>()
             {
-                new()
-                {
-                    Title = "AboutUs",
-                    Slug = "about-us",
-                    IsVisible = false
-                },
-                new()
-                {
-                    Title = "Dịch vụ",
-                    Slug = "services",
-                    IsVisible = false
-                },
+                // new()
+                // {
+                //     Title = "AboutUs",
+                //     Slug = "about-us",
+                //     IsVisible = false
+                // },
+                // new()
+                // {
+                //     Title = "Dịch vụ",
+                //     Slug = "services",
+                //     IsVisible = false
+                // },
                 new()
                 {
                     Title = "Thám Tử",
@@ -730,7 +730,7 @@ public class CmsDbContextSeed
                 new()
                 {
                     ContentType = "Service",
-                    Title = "Theo dõi ngoại tình",
+                    Title = "Dịch vụ Theo dõi ngoại tình",
                     ImageUrl = "",
                     Slug = "theo-doi-ngoai-tinh.html",
                     Summary = @"
@@ -763,7 +763,7 @@ public class CmsDbContextSeed
                 new()
                 {
                     ContentType = "Service",
-                    Title = "Điều tra huyết thống",
+                    Title = "Dịch vụ Điều tra huyết thống",
                     ImageUrl = "",
                     Slug = "dieu-tra-huyet-thong.html",
                     
@@ -780,7 +780,7 @@ public class CmsDbContextSeed
                 new()
                 {
                     ContentType = "Service",
-                    Title = "Điều tra số điện thoại",
+                    Title = "Dịch vụ Điều tra số điện thoại",
                     ImageUrl = "",
                     Slug = "dieu-tra-so-dien-thoai.html",                 
                     Summary = @"
@@ -797,7 +797,7 @@ public class CmsDbContextSeed
                 new()
                 {
                     ContentType = "Service",
-                    Title = "Điều tra biển số xe",
+                    Title = "Dịch vụ Điều tra biển số xe",
                     ImageUrl = "",
                     Slug = "dieu-tra-bien-so-xe.html",                   
                     Summary = @"
@@ -813,7 +813,7 @@ public class CmsDbContextSeed
                 new()
                 {
                     ContentType = "Service",
-                    Title = "Điều tra hàng giả",
+                    Title = "Dich vụ Điều tra hàng giả",
                     ImageUrl = "",
                     Slug = "dieu-tra-hang-gia.html",                 
                     Summary = @"
