@@ -15,6 +15,8 @@ public static class SeriLogger
                 .WriteTo.Debug()
                 .WriteTo.Console(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+                .WriteTo.File("logs/cms.log")
+                //.WriteTo.RollingFile("log-{Date}.txt", shared: true)
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithProperty("Environment", environmentName)

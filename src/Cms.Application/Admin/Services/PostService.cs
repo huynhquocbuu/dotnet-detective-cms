@@ -11,31 +11,16 @@ namespace Cms.Application.Admin.Services;
 
 public class PostService : IPostUseCase
 {
-    //private readonly ICategoryRepository _categoryRepository;
-    //private readonly ITagRepository _tagRepository;
-    //private readonly IPostRepository _postRepository;
     private readonly CmsConfiguration _cmsConfiguration;
     private readonly CmsDbContext _context;
-    //private readonly IPostCategoryRepository _postCategoryRepository;
-    //private readonly IPostTagRepository _postTagRepository;
     private readonly IUnitOfWork _uow;
     public PostService(
         CmsConfiguration cmsConfiguration,
-        //ICategoryRepository categoryRepository,
-        //ITagRepository tagRepository,
-        //IPostRepository postRepository,
-        //IPostCategoryRepository postCategoryRepository,
-        //IPostTagRepository postTagRepository,
         CmsDbContext context,
         IUnitOfWork uow)
     {
         _cmsConfiguration = cmsConfiguration;
-        //_categoryRepository = categoryRepository;
-        //_tagRepository = tagRepository;
-        //_postRepository = postRepository;
         _context = context;
-        //_postCategoryRepository = postCategoryRepository;
-        //_postTagRepository = postTagRepository;
         _uow = uow;
     }
 
@@ -88,12 +73,13 @@ public class PostService : IPostUseCase
     public async Task AddPost(PostDto dto, string authorId)
     {
         //Upload image
-        dto.PostImgUrl = Path.Combine(
+        dto.PostImgUrl = $"/{_cmsConfiguration.ContentFolder}/{_cmsConfiguration.BlogFolder}/{dto.PostImg.FileName}";
+        var uploadPath = Path.Combine(
             _cmsConfiguration.WebRootPath,
             _cmsConfiguration.ContentFolder,
             _cmsConfiguration.BlogFolder,
             dto.PostImg.FileName);
-        using (FileStream stream = new FileStream(dto.PostImgUrl, FileMode.Create))
+        using (FileStream stream = new FileStream(uploadPath, FileMode.Create))
         {
             await dto.PostImg.CopyToAsync(stream);
         }
@@ -177,7 +163,22 @@ public class PostService : IPostUseCase
         postEntity.Title = model.Title;
         postEntity.Summary = model.Summary;
         postEntity.Content = model.Content;
-
+        
+        //Upload image
+        if (model.PostImg != null)
+        {
+            var uploadUrl = Path.Combine(
+                _cmsConfiguration.WebRootPath,
+                _cmsConfiguration.ContentFolder,
+                _cmsConfiguration.BlogFolder,
+                model.PostImg.FileName);
+            using (FileStream stream = new FileStream(uploadUrl, FileMode.Create))
+            {
+                await model.PostImg.CopyToAsync(stream);
+            }
+            model.PostImgUrl = $"/{_cmsConfiguration.ContentFolder}/{_cmsConfiguration.BlogFolder}/{model.PostImg.FileName}";
+            postEntity.ImageUrl = model.PostImgUrl;
+        }
         await _uow.PostCategoryRepository.UpdatePostCatAsync(model.PostId, model.SelectedCategories);
         await _uow.PostTagRepository.UpdatePostTagAsync(model.PostId, model.SelectedTags);
         
