@@ -115,6 +115,7 @@ public class ImageBrowserController : ControllerBase
     public IActionResult Upload([FromForm] string path, [FromForm] IFormFile file)
     {
         var fileName = Path.GetFileName(file.FileName);
+        path = path ?? "";
         using (FileStream stream = new FileStream(Path.Combine(_directoryBrowser.RootFolder, path, fileName), FileMode.Create))
         {
             file.CopyTo(stream);
