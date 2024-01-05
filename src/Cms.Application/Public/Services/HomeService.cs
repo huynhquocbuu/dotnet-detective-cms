@@ -77,26 +77,7 @@ public class HomeService : IHomeUseCase
 
     public List<HomeInfoDto> GetPostsInfo()
     {
-        //var posts = _cmsDbContext.Posts
-        //    .FromSqlRaw(@"
-        //        SELECT p.* FROM Posts p
-        //        JOIN CategoryPost cp ON p.Id = cp.PostsId
-        //        JOIN Categories c ON c.Id = cp.CategoriesId
-        //        JOIN PostTag pt ON pt.PostsId = p.Id
-        //        JOIN Tags t ON pt.TagsId = t.Id
-        //        WHERE c.Slug = 'tham-tu'")
-        //    .OrderBy(o => o.Order)
-        //    .ToList();
         
-        //return posts
-        //    .Select(s => new HomeInfoDto()
-        //    {
-        //        Title = s.Title,
-        //        DetailSlug = s.Slug,
-        //        Content = s.Summary,
-        //        ImageUrl = s.ImageUrl,
-        //        Session = "Post"
-        //    }).ToList();
 
         return _postRepository
             .FindAll()
